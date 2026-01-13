@@ -1,0 +1,22 @@
+[
+  {
+    "rag_summary": "未匹配到有效漏洞名称: CVE-2024-39907",
+    "name": "CVE-2024-39907",
+    "path": "1panel/CVE-2024-39907",
+    "image": "vulhub/1panel:1.10.10",
+    "contracts": {
+      "ingress": [10086],
+      "vuln_type": "unknown"
+    }
+  },
+  {
+    "rag_summary": "未匹配到有效漏洞名称: CVE-2016-3714",
+    "name": "CVE-2016-3714",
+    "path": "imagemagick/CVE-2016-3714",
+    "image": "vulhub/imagemagick:6.9.2-10-php",
+    "contracts": {
+      "ingress": [8080],
+      "vuln_type": "unknown"
+    }
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "pipeline_config": {
+    "vulhub_knowledge_base_path": "cve_list.csv",
+    "vulhub_repo_url": "https://github.com/vulhub/vulhub",
+    "output_path": "output",
+    "llm_api_url": "https://api.deepseek.com/v1/chat/completions",
+    "llm_api_key": "sk-82790206936f4b11b3c1b768f138c6f9",
+    "mcp_server_url": "YOUR_MCP_SERVER_URL_HERE"
+  },
+  "knowledge_base": {
+    "supported_formats": [".json", ".txt", ".csv"],
+    "search_method": "keyword_matching",
+    "default_fields": ["name", "path"]
+  },
+  "llm_config": {
+    "model": "deepseek-chat",
+    "temperature": 0.5,
+    "max_tokens": 1000,
+    "prompt_template": "请根据提供的漏洞信息，严格按照以下模板生成中文描述摘要：\n\n核心要素：\n- 漏洞标识（CVE 编号）\n- 受影响组件（软件 / 框架及版本）\n- 漏洞类型（如认证绕过、XSS、SSRF 等）\n- 利用前置条件（是否认证、特定配置 / 权限）\n- 核心利用操作（关键步骤 + 技术细节 + 触发点）\n- 危害效果（直接危害 + 间接危害 + 影响范围）\n- 环境信息（镜像 + 端口）\n\n模板：\n\"漏洞 {name} 是 [受影响组件] 中的 [漏洞类型] 漏洞。该漏洞需满足 [利用前置条件]，攻击者可通过 [关键操作步骤]，构造 [技术细节描述] 的恶意内容发送至 [触发点] 触发漏洞；利用成功后可直接导致 [直接危害描述]，进而可能 [间接危害描述]，对 [影响范围] 造成严重威胁。对应的环境镜像为 [镜像名称]，默认运行在 [端口] 端口。\"\n\n漏洞名称: {name}\n相关信息: {context}\n\n请严格按照模板格式生成，将方括号内的内容替换为具体的漏洞信息，不要添加任何额外内容，确保所有核心要素都被包含进去。\n\n输出格式：\nvuln_type: <漏洞类型>\nrag_summary: <按照模板生成的中文描述>"
+  },
+  "vuln_types": [
+    "rce",
+    "xss",
+    "ssrf",
+    "deserialize",
+    "csrf",
+    "path_traversal",
+    "sql_injection",
+    "command_injection",
+    "buffer_overflow",
+    "auth_bypass",
+    "xxe",
+    "open_redirect",
+    "clickjacking",
+    "idor",
+    "race_condition",
+    "insecure_config",
+    "crypto_issue",
+    "log_injection",
+    "template_injection",
+    "file_upload",
+    "dos",
+    "redirect_issue",
+    "authentication_bypass",
+    "privilege_escalation",
+    "information_disclosure",
+    "deserialization",
+    "unknown"
+  ],
+  "file_processing": {
+    "max_file_size": "10MB",
+    "supported_extensions": [".json", ".txt", ".md"],
+    "encoding": "utf-8"
+  }
+}

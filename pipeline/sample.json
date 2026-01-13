@@ -1,0 +1,12 @@
+[
+{
+  "rag_summary": "漏洞 CVE-2024-39907 是 1Panel 控制面板中的 SQL 注入漏洞。该漏洞需满足已完成 1Panel 控制面板认证的前置条件，攻击者可通过向指定接口参数注入恶意 SQL 语句的关键操作，构造包含 SQLite ATTACH DATABASE 操作（如 “3;ATTACH DATABASE '/tmp/pwn.txt' AS pwn;”）的恶意内容发送至 /api/v1/hosts/command/search 接口的 orderBy 参数触发漏洞；利用成功后可直接导致在目标 1Panel 服务器上执行任意代码，进而可能完全控制目标系统，对服务器权限、数据安全性造成严重威胁。对应的环境镜像为 vulhub/1panel/CVE-2024-39907，默认运行在 10086 端口。",
+  "name": "CVE-2024-39907",
+  "path": "1panel/CVE-2024-39907",
+  "image": "vulhub/1panel:1.10.10",
+  "contracts": {
+    "ingress": [10086],
+    "vuln_type": "sql_injection"
+  }
+}
+]
